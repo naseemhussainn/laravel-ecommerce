@@ -29,7 +29,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::resource('orders', AdminOrderController::class);
 });
 
-// Manager Routes
+
 Route::middleware(['auth', 'role:manager'])->prefix('manager')->name('manager.')->group(function () {
     Route::get('/dashboard', [ManagerDashboardController::class, 'index'])->name('dashboard');
     Route::resource('products', ManagerProductController::class);
@@ -37,7 +37,7 @@ Route::middleware(['auth', 'role:manager'])->prefix('manager')->name('manager.')
     Route::resource('documents', ManagerDocumentController::class);
 });
 
-// Customer Routes
+
 Route::middleware(['auth', 'role:customer'])->name('customer.')->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::get('/products', [HomeController::class, 'products'])->name('products');
@@ -51,7 +51,7 @@ Route::middleware(['auth', 'role:customer'])->name('customer.')->group(function 
     Route::post('/checkout', [CustomerOrderController::class, 'checkout'])->name('checkout');
 });
 
-// Redirect based on role after login
+
 Route::get('/home', function () {
     if (Auth::user()->isAdmin()) {
         return redirect()->route('admin.dashboard');
